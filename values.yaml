@@ -1,33 +1,18 @@
 labels:
   app: nginx
-name: myapp
+name: goapp
 env: dev
 appname: interview
-podname: myapp-pod
-
+podname: goapp-pod
 replicaCount: 1
-
 image:
   repository: nginx
   pullPolicy: IfNotPresent
   tag: ""
-
 imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
 service:
   type: ClusterIP
   port: 80
-
 resources:
    limits:
      cpu: 100m
@@ -36,4 +21,15 @@ resources:
      cpu: 100m
      memory: 128Mi
 
+# Configmap values
+
+configvalues:
+  HTTP_PORT_PUBLIC: 443
+  HTTP_PORT_PRIVATE: 80
+  UPSTREAM_WS: XXXXXX
+  UPSTREAM_WS_AUTH_TOKEN: YYYY
+
+secretvalues:
+  DATABASE_CONNECTION_STRING: cG9zdGdyZXM6Ly9wb3N0Z3JlczpteXNlY3JldHBhc3N3b3JkQDE3Mi4xNy4wLjI6NTQzMi90ZXN0ZA==
+  APPLICATION_SECRET: YYYYY
 
