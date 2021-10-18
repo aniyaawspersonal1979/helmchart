@@ -24,12 +24,11 @@ resources:
 # Configmap values
 
 configvalues:
-  HTTP_PORT_PUBLIC: 443
-  HTTP_PORT_PRIVATE: 80
-  UPSTREAM_WS: XXXXXX
-  UPSTREAM_WS_AUTH_TOKEN: YYYY
+  http_port_public: 443
+  http_port_private: 80
+  upstream_ws: XXXXXX
+  upstream_ws_auth_token: YYYY
 
 secretvalues:
-  DATABASE_CONNECTION_STRING: cG9zdGdyZXM6Ly9wb3N0Z3JlczpteXNlY3JldHBhc3N3b3JkQDE3Mi4xNy4wLjI6NTQzMi90ZXN0ZA==
-  APPLICATION_SECRET: YYYYY
-
+  database_connection_string: cG9zdGdyZXM6Ly9wb3N0Z3JlczpteXNlY3JldHBhc3N3b3JkQDE3Mi4xNy4wLjI6NTQzMi90ZXN0ZA==
+  application_secret: YYYYY
