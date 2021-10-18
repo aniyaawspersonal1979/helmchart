@@ -2,6 +2,7 @@ labels:
   app: nginx
 name: myapp
 env: dev
+appname: interview
 podname: myapp-pod
 
 replicaCount: 1
