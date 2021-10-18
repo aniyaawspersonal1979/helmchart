@@ -2,15 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-{{- with .Values.deploy }}
+{{- with .Values.labels }}
 {{- toYaml . |nindent 4 }}
 {{- end }}
-  name: mygoapp
+  name: {{ .Values.name }}
+  namespace: {{ .Values.appname }}-{{ .Values.env }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-{{- with .Values.deploy }}
+{{- with .Values.labels }}
 {{- toYaml . |nindent 8 }}
 {{- end }}
   strategy: {}
@@ -18,13 +19,13 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-{{- with .Values.deploy }}
+{{- with .Values.labels }}
 {{- toYaml . |nindent 8 }}
 {{- end }}
     spec:
       containers:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-        name: {{ .Chart.Name }}
+        name: {{ .Values.name }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:
           httpGet:

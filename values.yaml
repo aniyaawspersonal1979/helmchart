@@ -1,9 +1,8 @@
-deploymentvars:
-  labels:
-    app: nginx
-  name: myapp
-  env: dev
-  podname: myapp-pod
+labels:
+  app: nginx
+name: myapp
+env: dev
+podname: myapp-pod
 
 replicaCount: 1
 
@@ -36,6 +35,4 @@ resources:
      cpu: 100m
      memory: 128Mi
 
-deploy:
-    app: nginx
 
