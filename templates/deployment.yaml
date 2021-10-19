@@ -5,7 +5,7 @@ metadata:
 {{- with .Values.labels }}
 {{- toYaml . |nindent 4 }}
 {{- end }}
-  name: {{ .Values.name }}
+  name: {{ .Release.Name }}
   namespace: {{ .Values.appname }}-{{ .Values.env }}
 spec:
   replicas: {{ .Values.replicaCount }}
@@ -27,7 +27,7 @@ spec:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         name: {{ .Values.podname }}
         env:
-{{- $configname  := .Values.name -}}
+{{- $configname  := .Release.Name -}}
   {{- range $key, $value := .Values.configvalues }}
           - name: {{ $key |upper }}
             valueFrom:
