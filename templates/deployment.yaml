@@ -35,21 +35,21 @@ spec:
                   name: {{ $configname }}-configmap
                   key: {{ $key }}
   {{- end }}
-   {{- range $key, $value := .Values.secretvalues }}
+  {{- range $key, $value := .Values.secretvalues }}
           - name: {{ $key |upper }}
             valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: {{ $configname }}-secret
                   key: {{ $key }}
   {{- end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:
           httpGet:
-              path: /
+              path: /healtz
               port: http
         readinessProbe:
           httpGet:
-              path: /
+              path: /healtz
               port: http
         resources:
 	  {{- toYaml .Values.resources | nindent 12 }}
