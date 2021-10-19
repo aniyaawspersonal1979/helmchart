@@ -35,6 +35,13 @@ spec:
                   name: {{ $configname }}-configmap
                   key: {{ $key }}
   {{- end }}
+   {{- range $key, $value := .Values.secretvalues }}
+          - name: {{ $key |upper }}
+            valueFrom:
+                configMapKeyRef:
+                  name: {{ $configname }}-secret
+                  key: {{ $key }}
+  {{- end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:
           httpGet:
