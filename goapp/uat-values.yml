@@ -1,14 +1,14 @@
 labels:
-  app: nginx
+  app: mygoapp
 name: goapp
-env: dev
+env: uat
 appname: interview
 podname: goapp-pod
 replicaCount: 1
 image:
-  repository: nginx
+  repository: myimagename
   pullPolicy: IfNotPresent
-  tag: ""
+  tag: "latest"
 imagePullSecrets: []
 service:
   type: ClusterIP

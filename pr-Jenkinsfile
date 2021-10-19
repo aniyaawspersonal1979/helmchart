@@ -1,0 +1,38 @@
+pipeline {
+  agent any
+  options {
+      timeout(time: 50, unit: 'MINUTES')
+      ansiColor('xterm')
+      /* groovylint-disable-next-line DuplicateStringLiteral */
+      buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+  }
+  environment {
+      JAVA_TOOL_OPTIONS = '-XX:+UnlockExperimentalVMOptions -Dsun.zip.disableMemoryMapping=true'
+      REPOSITORY_BRANCH="${PULL_REQUEST_FROM_BRANCH}"
+
+  }
+  stages {
+    stage('GitClone') {
+      steps {
+        script {
+          String payload = "${payload}"
+          jsonObject = readJSON text: payload
+          gitHash = "${jsonObject.pull_request.head.sha}"
+          String gitUrl = "${jsonObject.repository.clone_url}"
+          /* groovylint-disable-next-line LineLength */
+          checkout([$class: 'GitSCM', branches: [[name: "${gitHash}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'gitaccess', url: "${gitUrl}"]]])
+        }
+      }
+    }
+    stage('Get Dependencies') {
+      steps {
+        script {
+          sh """
+            helm install testingpr --dry-run --debug .
+          """
+        }
+      }
+    }
+
+    }
+  }

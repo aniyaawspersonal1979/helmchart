@@ -1,0 +1,34 @@
+labels:
+  app: mygoapp
+name: goapp
+env: dev
+appname: interview
+podname: goapp-pod
+replicaCount: 1
+image:
+  repository: myimagename
+  pullPolicy: IfNotPresent
+  tag: "latest"
+imagePullSecrets: []
+service:
+  type: ClusterIP
+  port: 80
+resources:
+   limits:
+     cpu: 100m
+     memory: 128Mi
+   requests:
+     cpu: 100m
+     memory: 128Mi
+
+# Configmap values
+
+configvalues:
+  http_port_public: "80"
+  http_port_private: "80"
+  upstream_ws: "XXXXXX"
+  upstream_ws_auth_token: "YYYY"
+
+secretvalues:
+  database_connection_string: cG9zdGdyZXM6Ly9wb3N0Z3JlczpteXNlY3JldHBhc3N3b3JkQDE3Mi4xNy4wLjI6NTQzMi90ZXN0ZA==
+  application_secret: WVlZWQo=
