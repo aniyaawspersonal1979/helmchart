@@ -24,7 +24,7 @@ pipeline {
         }
       }
     }
-    stage('Get Dependencies') {
+    stage('Verify code') {
       steps {
         script {
           sh """
