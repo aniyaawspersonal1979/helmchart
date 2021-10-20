@@ -1,0 +1,37 @@
+pipeline {
+  agent any
+  parameters {
+      choice(name: 'ENV', choices: ['dev', 'uat', 'prod'], description: 'Environment to deploy')
+      string(name: 'VERSION', defaultValue: '1.0.0', description: 'Image version to deploy') 
+      
+  } 
+  stages {
+    stage('printing inputs') {
+      steps {
+        script {
+        println "env is ${params.ENV},Image version selected is ${params.VERSION}"  
+        }
+        
+      }
+    }
+    stage('GitClone') {
+      steps {
+        script {
+          checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'gitaccess', url: 'https://github.com/username/helmrepo.git']]])
+        }
+      }
+    }    
+    stage('App Deployment') {
+        steps {
+            script {
+                withKubeConfig([credentialsId: 'k8scluster',serverUrl: 'https://kubernetscluster.com:6443']) {
+                    sh """
+                    helm install --set "name=goapp" --set "env=${params.ENV}" --set "image.tag=${params.VERSION} ./goapp/
+                    """
+                }
+                }
+            }
+        }
+    
+  }
+}
